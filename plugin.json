@@ -1,0 +1,23 @@
+{
+  "author": "Buildfire",
+  "pluginName": "UserData Example - Roy",
+  "pluginDescription": "a quick example to show how the user data main functions work",
+  "supportEmail": "devSupport@buildfire.com",
+  "control": {
+    "content": {
+      "enabled": true
+    },
+    "design":{
+      "enabled": false
+    },
+    "settings": {
+      "enabled": false
+    }
+  },
+  "widget": {
+
+  },
+  "features": [],
+  "languages": ["en"],
+  "requireLogin" : true
+}
