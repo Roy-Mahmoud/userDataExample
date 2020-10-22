@@ -21,7 +21,7 @@ class Task {
 		});
 	}
 
-	getTaskMarkup = () => {
+	getTaskMarkup() {
 		const { taskName } = this.taskData;
 		return `
     <p class="task__content" >
@@ -34,5 +34,5 @@ class Task {
     <button id="editButton" class="task__edit"  > edit </button>
     </div>
     `;
-	};
+	}
 }

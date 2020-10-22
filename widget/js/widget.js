@@ -1,6 +1,4 @@
 class Widget {
-	myTasks = [];
-	editMode = false;
 	constructor() {
 		this.initLogin();
 		this.forceLogin();
@@ -10,27 +8,29 @@ class Widget {
 		this.input = document.querySelector("#taskInput");
 		this.addButton.addEventListener("click", this.submit);
 		this.input.addEventListener("keyup", this.onInputChange);
+		this.myTasks = [];
+		this.editMode = false;
 	}
 
-	initLogin = () => {
+	initLogin() {
 		buildfire.auth.getCurrentUser((err, user) => {
 			if (err) return console.log(err);
 			if (!user) {
 				this.promptLogin();
 			}
 		});
-	};
+	}
 
-	getMyTasks = () => {
+	getMyTasks() {
 		buildfire.userData.search({}, "myTasks", (err, result) => {
 			if (err) return console.log(err);
 			this.myTasks = result;
 			console.log(this.myTasks);
 			this.renderTasks();
 		});
-	};
+	}
 
-	renderTasks = () => {
+	renderTasks() {
 		this.container.innerHTML = "";
 		this.myTasks.forEach((task) => {
 			new Task(
@@ -39,21 +39,21 @@ class Widget {
 				this.enableEditMode
 			);
 		});
-	};
+	}
 
-	forceLogin = () => {
+	forceLogin() {
 		buildfire.auth.onLogout(() => {
 			this.promptLogin();
 		});
-	};
+	}
 
-	promptLogin = () => {
+	promptLogin() {
 		buildfire.auth.login({ allowCancel: false }, (err, result) => {
 			if (err) return console.log(err);
 		});
-	};
+	}
 
-	submit = () => {
+	submit() {
 		if (this.editMode) {
 			console.log(this.editTaskId, this.taskName);
 			buildfire.userData.update(
@@ -81,9 +81,9 @@ class Widget {
 				}
 			);
 		}
-	};
+	}
 
-	updateSpecificTask = (taskData) => {
+	updateSpecificTask(taskData) {
 		const taskIndex = this.myTasks.findIndex((task) => {
 			return task.id === taskData.id;
 		});
@@ -92,35 +92,35 @@ class Widget {
 		this.myTasks[taskIndex].data = { ...taskData.data };
 		this.disabledEditMode();
 		this.renderTasks();
-	};
+	}
 
-	onInputChange = ({ target }) => {
+	onInputChange({ target }) {
 		const { value } = target;
 		this.taskName = value;
-	};
+	}
 
-	deleteTask = (taskId) => {
+	deleteTask(taskId) {
 		buildfire.userData.delete(taskId, "myTasks", null, (err, result) => {
 			if (err) return console.log(err);
 
 			this.myTasks = this.myTasks.filter((task) => task.id !== taskId);
 			this.renderTasks();
 		});
-	};
+	}
 
-	enableEditMode = (taskData) => {
+	enableEditMode(taskData) {
 		this.input.value = taskData.taskName;
 		this.addButton.textContent = "save";
 		this.editMode = true;
 		this.editTaskId = taskData.id;
-	};
+	}
 
-	disabledEditMode = () => {
+	disabledEditMode() {
 		this.input.value = "";
 		this.addButton.textContent = "Add";
 		this.editMode = false;
 		this.editTaskId = null;
-	};
+	}
 }
 
 new Widget();
