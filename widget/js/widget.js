@@ -1,10 +1,6 @@
 class Widget {
-	taskName;
 	myTasks = [];
-	addButton;
-	input;
 	editMode = false;
-	editTaskId;
 	constructor() {
 		this.initLogin();
 		this.forceLogin();
