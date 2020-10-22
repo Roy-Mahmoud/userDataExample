@@ -1,8 +1,4 @@
 class Task {
-	container;
-	taskData;
-	onDeleteTask;
-	onEnableEditMode;
 	constructor(taskData, onDeleteTask, onEnableEditMode) {
 		this.container = document.querySelector("#tasksContainer");
 		this.taskData = taskData;
